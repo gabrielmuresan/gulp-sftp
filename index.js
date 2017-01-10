@@ -198,7 +198,8 @@ module.exports = function (options) {
          */
 
     };
-
+    gutil.log('final remote path: ' + options.remotePath);
+    gutil.log('remove path      : ' + options.removePath);
     return through.obj(function (file, enc, cb) {
         if (file.isNull()) {
             this.push(file);
@@ -207,8 +208,7 @@ module.exports = function (options) {
 
         // have to create a new connection for each file otherwise they conflict, pulled from sindresorhus
         var finalRemotePath = normalizePath(path.join(remotePath, file.relative));
-        gutil.log('final remote path: ' + finalRemotePath);
-        gutil.log('remove path      : ' + options.removePath);
+        
         //connection pulled from pool
         pool.call(this, finalRemotePath, function(sftp){
             /*
