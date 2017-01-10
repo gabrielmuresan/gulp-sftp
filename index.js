@@ -198,8 +198,8 @@ module.exports = function (options) {
          */
 
     };
-    gutil.log('final remote path: ' + options.remotePath);
-    gutil.log('remove path      : ' + options.removePath);
+    gutil.log('remote path: ' + remotePath);
+    gutil.log('remove path: ' + options.removePath);
     return through.obj(function (file, enc, cb) {
         if (file.isNull()) {
             this.push(file);
