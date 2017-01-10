@@ -16,7 +16,9 @@ var normalizePath = function(path){
 
 module.exports = function (options) {
     options = assign({}, options);// credit sindresorhus
-
+    if(options.removePath === undefined) {
+        options.removePath = false;
+    }
 
     if (options.host === undefined) {
         throw new gutil.PluginError('gulp-sftp', '`host` required.');
@@ -205,7 +207,8 @@ module.exports = function (options) {
 
         // have to create a new connection for each file otherwise they conflict, pulled from sindresorhus
         var finalRemotePath = normalizePath(path.join(remotePath, file.relative));
-
+        gutil.log('final remote path: ' + finalRemotePath);
+        gutil.log('remove path      : ' + options.removePath);
         //connection pulled from pool
         pool.call(this, finalRemotePath, function(sftp){
             /*
