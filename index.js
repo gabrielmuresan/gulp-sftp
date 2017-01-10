@@ -200,6 +200,15 @@ module.exports = function (options) {
     };
     gutil.log('remote path: ' + remotePath);
     gutil.log('remove path: ' + options.removePath);
+    if(options.removePath === true) {
+        sftp.rmdir(remotePath, function(err) {
+            if(err) {
+                gutil.log('SFTP rmdir error:', gutil.colors.red(err + " " +remotePath));
+            } else {
+                gutil.log('Path ', gutil.colors.green(remotePath), ' removed.');
+            }
+        });
+    }
     return through.obj(function (file, enc, cb) {
         if (file.isNull()) {
             this.push(file);
